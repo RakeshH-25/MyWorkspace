@@ -2,11 +2,13 @@ class Oddnumbers
 	def oddNums(a)
 		puts "given array is"
 		puts a.join(" ")
+		res=[]
 		puts "odd numbers are"
 		a.each{ |x| 
 			if((x%2)!=0) 
-			 puts x
+			 res.push x
 			end}
+		puts res.join(" ")
 	end
 end
 

@@ -2,11 +2,11 @@ class Squareofnums
 	def squareNums(a)
 		puts "given array is"
 		puts a.join(" ")
+		res=[]
 		puts "square of numbers are"
 		a.each{ |x| 
-			print x 
-			print "-"
-			puts x*x }
+			res.push x*x}
+		puts res.join(" ")
 	end
 end
 
