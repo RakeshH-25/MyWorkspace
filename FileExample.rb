@@ -14,8 +14,7 @@ class Whether
 
 		day_index =  @col3.index(@col3.min)
 		
-		puts @col1[day_index.to_i]
-		
+		@col1[day_index.to_i]
 	end
 end
 
@@ -28,4 +27,5 @@ class TestNumbers < Test::Unit::TestCase
 end
 
 file="/home/rakesh/Downloads/weather.txt"
-Whether.new.get_day(file)
+ day = Whether.new.get_day(file)
+ puts day
