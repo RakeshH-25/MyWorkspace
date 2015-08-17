@@ -1,14 +1,14 @@
+
+require "test/unit"
+
 class Sumofarray
-	def arraySum(a)
-		puts "given array is"
-		puts a.join(" ")
-		sum=0
-		puts "sum of numbers is"
-		a.each{ |x| sum+=x }
-		puts sum
-	end
+def sum_of_array(array)
+    array.inject(0) { |sum, i| sum + i}
+  end
 end
 
-array=Sumofarray.new
-arr=[1,2,3,4,5,6,7,8,9]
-array.arraySum(arr)
+class TestNumbers < Test::Unit::TestCase
+	def test_sume
+    assert_equal(36, Sumofarray.new.sum_of_array([1,2,3,4,5,6,7,8]))
+  end
+end

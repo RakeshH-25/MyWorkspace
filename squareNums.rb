@@ -1,15 +1,14 @@
+
+require "test/unit"
+
 class Squareofnums
-	def squareNums(a)
-		puts "given array is"
-		puts a.join(" ")
-		res=[]
-		puts "square of numbers are"
-		a.each{ |x| 
-			res.push x*x}
-		puts res.join(" ")
-	end
+	def square_elements(array)
+    array.map {|i| i * i}
+  end
 end
 
-array=Squareofnums.new
-arr=[1,2,3,4,5,6,7,8,9]
-array.squareNums(arr)
+class TestNumbers < Test::Unit::TestCase
+  def test_squares
+    assert_equal([1,4,9,16,25,36,49,64], Squareofnums.new.square_elements([1,2,3,4,5,6,7,8]))
+  end
+end

@@ -2,48 +2,42 @@
 require "test/unit"
 
 class Triangletype2
-    def triangle_1(i,n)
-        num=i-1
-        line=[" "]
-            line.push(" "*(n*2-i*2))
-            i.times do |i| 
-                if num==9
-                    line.push(num=0)
-                else
-                    line.push(num+=1)
-                end
-            end
-        if i-1>0
-            (i-1).times do |i|  
-                if num==9
-                    line.push(num=8)
-                else
-                    if num==0
-                        line.push(num=9)
 
-                    end
-                    
-                line.push(num-=1)
-                end
-            end
-        end
-        return line
+    def triangle_line(current_line,total_lines)
+
+        @line = ""
+        add_space(total_lines-current_line)
+        add_digits(current_line)
+        @line
+    end
+
+    def add_space(space_count)
+        @line << " "*space_count.to_i
+    end
+
+    def add_digits(current_line)
+        current_line.times { |n| @line << ((n+1)%10).to_s }
+        add_second_half_digits(current_line)
+    end
+
+    def add_second_half_digits(current_line)
+        @line << @line.chop.reverse
     end
 end
 
 class TestNumbers < Test::Unit::TestCase
     def test_line
-        assert_equal([" ", "", 5, 6, 7, 8, 9, 8, 7, 6, 5], Triangletype2.new.triangle_1(5,5))
+        assert_equal("123454321", Triangletype2.new.triangle_line(5,5))
     end
 
 end
 
-n=ARGV[0].to_i
+n = ARGV[0].to_i
 
-tri=Triangletype2.new
+triangle = Triangletype2.new
 n.times do |i|
     
-    line=tri.triangle_1(i,n)
-    puts line.join(" ")
+    line = triangle.triangle_line(i,n)
+    puts line
 end
 

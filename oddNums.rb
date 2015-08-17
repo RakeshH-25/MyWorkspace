@@ -1,17 +1,14 @@
+
+require "test/unit"
+
 class Oddnumbers
-	def oddNums(a)
-		puts "given array is"
-		puts a.join(" ")
-		res=[]
-		puts "odd numbers are"
-		a.each{ |x| 
-			if((x%2)!=0) 
-			 res.push x
-			end}
-		puts res.join(" ")
-	end
+	def odd_numbers(range)
+    range.reject { |i| i.even?  }
+  end
 end
 
-array=Oddnumbers.new
-arr=[1,2,3,4,5,6,7,8,9]
-array.oddNums(arr)
+class TestNumbers < Test::Unit::TestCase
+  def test_odds
+    assert_equal([1,3,5,7,9], Oddnumbers.new.odd_numbers([1,2,3,4,5,6,7,8,9]))
+  end
+end
