@@ -20,16 +20,14 @@ class GradleFile
 		  		if line[/versionCode/] and code_sub == false
 		  			p line
 		  			code_sub_line = line
-		  			substitute(path,code_sub_line,"versionCode = #{version_code}\n")
-		  			#p line.sub!("#{code_sub_line}", "versionCode = #{version_code}") 
+		  			substitute(path,code_sub_line,"versionCode #{version_code}\n")
 		  			code_sub = true
 		  		end
 		  		
 		  		if line[/versionName/] and name_sub == false
 		  			p line
 		  			name_sub_line = line
-		  			substitute(path,name_sub_line,"versionName = \"#{version_name}\"\n")
-		  			#p line["#{name_sub_line}"] = "versionName = \"#{version_name}\""
+		  			substitute(path,name_sub_line,"versionName \"#{version_name}\"\n")
 		  			name_sub = true
 		  		end
 		  		
@@ -43,6 +41,6 @@ class GradleFile
 	end
 end
 
-file="/home/rakesh/Downloads/build.gradle"
+file="/home/rakesh/Downloads/build1.gradle"
  day = GradleFile.new.modify(file, "DEV", "12345", "Example")
  puts day
