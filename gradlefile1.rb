@@ -20,16 +20,22 @@ class GradleFile
 		  		if line[/versionCode/] and code_sub == false
 		  			p line
 		  			code_sub_line = line
-		  			substitute(path,code_sub_line,"versionCode = #{version_code}\n")
-		  			#p line.sub!("#{code_sub_line}", "versionCode = #{version_code}") 
+		  			if code_sub_line.include? "="
+		  				substitute(path,code_sub_line,"versionCode = #{version_code}\n")
+		  			else
+		  				substitute(path,code_sub_line,"versionCode #{version_code}\n")
+		  			end
 		  			code_sub = true
 		  		end
 		  		
 		  		if line[/versionName/] and name_sub == false
 		  			p line
 		  			name_sub_line = line
-		  			substitute(path,name_sub_line,"versionName = \"#{version_name}\"\n")
-		  			#p line["#{name_sub_line}"] = "versionName = \"#{version_name}\""
+		  			if name_sub_line.include? "="
+		  				substitute(path,name_sub_line,"versionName = \"#{version_name}\"\n")
+		  			else
+		  				substitute(path,name_sub_line,"versionName \"#{version_name}\"\n")
+		  			end
 		  			name_sub = true
 		  		end
 		  		
