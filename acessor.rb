@@ -2,13 +2,9 @@ class Class
   
   def my_attr_accessor(*args)
 
-    args.each do |arg|
-      
-      self.class_eval("def #{arg};@#{arg};end")
-      
-      self.class_eval("def #{arg}=(val);@#{arg}=val;end")                      
-                      
-    end
+    my_attr_reader(*args)
+    my_attr_writer(*args)
+
   end
 
   def my_attr_reader(*args)
@@ -31,9 +27,9 @@ class Class
 end
 
 class Person
-  #my_attr_accessor :name, :age  
-  my_attr_writer :name, :age 
-  my_attr_reader :name, :age 
+  my_attr_accessor :name, :age  
+  # my_attr_writer :name, :age 
+  # my_attr_reader :name, :age 
 end
 
 person = Person.new
