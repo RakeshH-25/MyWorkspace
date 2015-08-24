@@ -19,8 +19,8 @@ class CSVReader
   def self.emp_find(val)
     employee = []
     @@arr_of_emp.each do |row|
-      if row.to_a.include?(val)
-        emp = Employee.new
+      if row.to_a.include?(val.to_s)
+        emp = @@filename.new
           @@arr_of_emp[0].each_with_index do |attr, index|
             emp.instance_variable_set("@#{attr}", row[index])
           end
@@ -46,7 +46,17 @@ emp.department = "it"
 p emp
 puts
 
- p Employee.find_by_age("25")
+ p Employee.find_by_age(25)
  puts
 
  p Employee.find_by_name("Sowjanya")
+ puts
+
+ class Student < CSVReader
+ end
+ p Student.find_by_name("Rakesh")
+ puts
+
+ class Company < CSVReader
+ end
+ p Company.find_by_country("India")
