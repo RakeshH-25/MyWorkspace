@@ -1,16 +1,15 @@
 class CSVReader
   require 'csv' 
-  attr_accessor :file_name, :file_data
+  #attr_accessor :file_name, :file_data
   
-  
-
   def self.inherited(subclass)
     @file_name = subclass
     
     @file_data = CSV.read("./#{subclass}.csv", :headers => true).to_a
    
-    subclass.instance_variable_set("@file_name", instance_variable_get(:@file_name))
-    subclass.instance_variable_set("@file_data", instance_variable_get(:@file_data))
+    # subclass.instance_variable_set("@file_name", instance_variable_get(:@file_name))
+    # subclass.instance_variable_set("@file_data", instance_variable_get(:@file_data))
+    subclass.inherit_attributes(@file_data)
 
     @file_data[0].each do |attr|
     
@@ -25,7 +24,8 @@ class CSVReader
 
   def self.get_find(val)
     match = []
-
+    p @file_data
+    super
     @file_data.each do |row|
       if row.to_a.include?(val.to_s)
         
@@ -58,7 +58,7 @@ emp=Employee.new
 emp.name = "rak"
 emp.age = 25
 emp.department = "it"
-p emp
+ emp
 puts
 
  p Employee.find_by_age(25)
