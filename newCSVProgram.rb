@@ -1,11 +1,18 @@
 class CSVReader
   require 'csv' 
+  attr_accessor :file_name, :file_data
+  
+  
+
   def self.inherited(subclass)
-    @@filename = subclass
+    @file_name = subclass
     
-    @@csv_data = CSV.read("./#{subclass}.csv", :headers => true).to_a
-    
-    @@csv_data[0].each do |attr|
+    @file_data = CSV.read("./#{subclass}.csv", :headers => true).to_a
+   
+    subclass.instance_variable_set("@file_name", instance_variable_get(:@file_name))
+    subclass.instance_variable_set("@file_data", instance_variable_get(:@file_data))
+
+    @file_data[0].each do |attr|
     
       # Adds accessor method which are the column headings of the csv.
       self.class_eval("attr_accessor :#{attr}")
@@ -18,10 +25,12 @@ class CSVReader
 
   def self.get_find(val)
     match = []
-    @@csv_data.each do |row|
+
+    @file_data.each do |row|
       if row.to_a.include?(val.to_s)
-        obj = @@filename.new
-          @@csv_data[0].each_with_index do |attr, index|
+        
+        obj = @file_name.new
+          @file_data[0].each_with_index do |attr, index|
             obj.instance_variable_set("@#{attr}", row[index])
           end
         match << obj
@@ -39,6 +48,12 @@ end
 class Employee < CSVReader
 end
 
+ class Student < CSVReader
+ end
+
+ class Company < CSVReader
+ end
+
 emp=Employee.new
 emp.name = "rak"
 emp.age = 25
@@ -51,11 +66,9 @@ puts
  p Employee.find_by_name("Sowjanya")
  puts
 
- class Student < CSVReader
- end
+
  p Student.find_by_name("Rakesh")
  puts
 
- class Company < CSVReader
- end
+
  p Company.find_by_country("India")
