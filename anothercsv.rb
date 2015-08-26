@@ -5,34 +5,26 @@ class CSVReader
     @file_name = subclass 
     @file_data = CSV.read("./#{subclass}.csv", :headers => true).to_a
     
-    obj = subclass.new
     subclass.instance_variable_set("@file_name", instance_variable_get(:@file_name))
     subclass.instance_variable_set("@file_data", instance_variable_get(:@file_data))
     
     @file_data[0].each do |attr|
-      
-      # Adds accessor method which are the column headings of the csv.
-      obj.create_attr("#{attr}")
-      #Adds class method of the form find_by_<column_name>(value).  
-      obj.create_method("find_by_#{attr}") { e = get_find(val) }
-      
+      subclass.instance_eval("def self.find_by_#{attr}(val);@col = \"#{attr}\";e = get_find(val.to_s,@col);end")
+      subclass.instance_eval("attr_accessor :#{attr}")
     end  
 
   end
 
-  def create_method(name, &block)
-    self.class.instance_eval("def self.#{name}(val);e = get_find(val);end")
-  end
-
-  def create_attr(name)
-    self.class.instance_eval("attr_accessor :#{name}")
-  end
-
-  def self.get_find(val)
+  def self.get_find(val,col)
+    
     match = []
+    fcol = ""
+    @file_data[0].each do |name|
+      fcol = @file_data[0].index(name) if name == col
+    end
     
     @file_data.each do |row|
-      if row.to_a.include?(val.to_s)
+      if row[fcol.to_i] == val
         
         obj = @file_name.new
           @file_data[0].each_with_index do |attr, index|
@@ -55,8 +47,8 @@ end
 class Company < CSVReader
 end
 
- # p Employee.methods
- # p Student.methods 
+  # p Employee.methods
+  # p Student.methods 
 
  # p CSVReader.instance_variables
  # p Employee.instance_variables
